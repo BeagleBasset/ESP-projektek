@@ -46,7 +46,7 @@ AMDG
 
 float melody[] = {
 
-  C4, D4, F4, E4, D4, F4, G4, A4
+  C4, D4, F4, E4, D4, E4, F4, G4
 };
 
 //Dallam tömb hossza
@@ -69,7 +69,8 @@ int Status = 0;   //Indítógomb státusza
 ///////////////////////////////////////////////
 
 const int BUZZERPIN   =   12;   //Hangszóró pin
-const int STARTPIN    =   14;   //Indítógomb pin
+const int STARTPIN    =   27;   //Indítógomb pin
+const int STARTPINVCC =   25;
 
 
 //--------------------------------------------//
@@ -77,8 +78,10 @@ const int STARTPIN    =   14;   //Indítógomb pin
 
 void setup() {
   
+  Serial.begin(9600);
+  Serial.println("Hello!");
   pinMode(STARTPIN, INPUT);       //Indítógomb pinmode deklarálása
-
+  pinMode(STARTPINVCC, OUTPUT);
 
   for(auto i: melody)             //A dallam hosszának megállapítása
   {
@@ -86,21 +89,26 @@ void setup() {
     Length++;
 
   }
-
+  Serial.println(Length);
 }
 
 void loop() {
-
+  digitalWrite(STARTPINVCC, HIGH);
   Status = digitalRead(STARTPIN); //A gomb állapota
+  Serial.println(Status);
   if(Status)
   {
+    
     //Lejátsza a dallamot
     for(int Note = 0; Note < Length; Note++)
     {
       tone(BUZZERPIN, melody[Note], NoteDuration);
       delay(DelayBetweenNotes);
       noTone(BUZZERPIN);
+      
     }
+    Status = 0;
+    Serial.println("Melody end.");
   }
   
 
