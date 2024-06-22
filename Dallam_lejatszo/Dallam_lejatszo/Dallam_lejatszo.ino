@@ -80,7 +80,7 @@ void setup() {
   
   Serial.begin(9600);
   Serial.println("Hello!");
-  pinMode(STARTPIN, INPUT);       //Indítógomb pinmode deklarálása
+  pinMode(STARTPIN, INPUT_PULLDOWN);       //Indítógomb pinmode deklarálása
   pinMode(STARTPINVCC, OUTPUT);
 
   for(auto i: melody)             //A dallam hosszának megállapítása
