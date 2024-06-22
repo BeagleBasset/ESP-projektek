@@ -70,7 +70,7 @@ int Status = 0;   //Indítógomb státusza
 
 const int BUZZERPIN   =   12;   //Hangszóró pin
 const int STARTPIN    =   27;   //Indítógomb pin
-const int STARTPINVCC =   25;
+const int STARTPINVCC =   25;   //Indítógomb VCC pin
 
 
 //--------------------------------------------//
@@ -78,24 +78,21 @@ const int STARTPINVCC =   25;
 
 void setup() {
   
-  Serial.begin(9600);
-  Serial.println("Hello!");
   pinMode(STARTPIN, INPUT_PULLDOWN);       //Indítógomb pinmode deklarálása
-  pinMode(STARTPINVCC, OUTPUT);
+  pinMode(STARTPINVCC, OUTPUT);            
 
-  for(auto i: melody)             //A dallam hosszának megállapítása
+  for(auto i: melody)                      //A dallam hosszának megállapítása
   {
 
     Length++;
 
   }
-  Serial.println(Length);
+
 }
 
 void loop() {
   digitalWrite(STARTPINVCC, HIGH);
   Status = digitalRead(STARTPIN); //A gomb állapota
-  Serial.println(Status);
   if(Status)
   {
     
@@ -108,7 +105,6 @@ void loop() {
       
     }
     Status = 0;
-    Serial.println("Melody end.");
   }
   
 
