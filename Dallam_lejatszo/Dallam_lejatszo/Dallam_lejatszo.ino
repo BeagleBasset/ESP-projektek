@@ -36,6 +36,8 @@ AMDG
 #define A4  440
 #define B4  493.88
 #define C5  523.25
+#define D5  587.33
+#define E5  659.25
 
 ///////////////////////////////////////////////
 //              DALLAM TÖMB                  //
@@ -46,7 +48,7 @@ AMDG
 
 float melody[] = {
 
-  C4, D4, F4, E4, D4, E4, F4, G4
+  C5, B4, A4, G4, A4, A4, E4, E4, E4, A4, A4, B4, C5, D5, E5, A4, D5, G4, C5, C5, B4, C5
 };
 
 //Dallam tömb hossza
@@ -55,8 +57,12 @@ int Length;
 
 // A hangok hossza
 
-int NoteDuration = 1000 / 4;                  //1 másodperccel leosztva a hanghossz
-int DelayBetweenNotes = NoteDuration * 1.30;  //Hangok közötti szünet
+int NoteDuration[] = {
+
+  4, 4, 4, 4, 12, 16, 2, 12, 16, 2, 4, 4, 2, 2, 2, 2, 2, 4, 4, 2, 2, 1
+
+};                  //1 másodperccel leosztva a hanghossz
+int DelayBetweenNotes = 1000 / 16 * 1.30;  //Hangok közötti szünet
 
 ///////////////////////////////////////////////
 //            GLOBÁLIS VÁLTOZÓK              //
@@ -99,8 +105,8 @@ void loop() {
     //Lejátsza a dallamot
     for(int Note = 0; Note < Length; Note++)
     {
-      tone(BUZZERPIN, melody[Note], NoteDuration);
-      delay(DelayBetweenNotes);
+      tone(BUZZERPIN, melody[Note], 2000 / NoteDuration[Note]);
+      delay(2000 / NoteDuration[Note] * 1.30);
       noTone(BUZZERPIN);
       
     }
