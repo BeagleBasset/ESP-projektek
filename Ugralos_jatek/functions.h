@@ -50,14 +50,14 @@ void rockSpawn(bool rockspawn, bool* rockMove){
 }
 
 int rockMove(int rockPosition, bool rockMove, bool* rockspawn){
-    if(rockMove == true){
+    *rockspawn = false;
+    if(rockMove == true && *rockspawn == false){
       if(rockPosition == 0){
         return rockPosition;
       }
       else{
         rockPosition--;
         Serial.println("Rock moving...");
-        *rockspawn = false;
         return rockPosition;
     }
     return rockPosition;

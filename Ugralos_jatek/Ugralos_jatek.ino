@@ -19,6 +19,8 @@ Ugrani egy gomb segítségével lehet.
 int g_score = 0;  
 int g_jumptic = 0;
 int g_playerstate = 0;
+int g_rock1pos = 15;
+int g_rock2pos = 15;
 bool g_rock1spawn = true;
 bool g_rock2spawn = true;
 bool g_rock1move = false;
