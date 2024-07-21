@@ -16,7 +16,13 @@ Ugrani egy gomb segítségével lehet.
 //GLOBÁLIS VÁLTOZÓK
 ///////////////////////////////////////////////////
 
-int g_score = 0;
+int g_score = 0;  
+int g_jumptic = 0;
+int g_playerstate = 0;
+bool g_rock1spawn = true;
+bool g_rock2spawn = true;
+bool g_rock1move = false;
+bool g_rock2move = false;
 
 ///////////////////////////////////////////////////
 //Konstansok
@@ -42,32 +48,31 @@ LiquidCrystal_I2C lcd(0x27, LCD_COLUMNS, LCD_ROWS);
 ///////////////////////////////////////////////////
 
 const int BUTTON_PIN = 13; //nyomógomb
- 
+const int ANALOG_PIN = 25;
 
 void setup() {
-  
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  randomSeed(analogRead(ANALOG_PIN));
+  Serial.begin(9600);
   lcd.init(); //LCD inicializálása
   lcd.backlight(); //Háttérvilágítás bekapcsolása
   lcd.createChar(0, Player); //Játékos legenerálása
+  lcd.createChar(1, Player2);
   //Főcímkép kiíráatása
   lcd.setCursor(0, 0); //Kurzur a belfelső sarokba
   lcd.print("**JUMPING GAME**");
   lcd.setCursor(0, 1);
-  for(int i; i <= 15; i++) //Kamu töltő képernyő :)
+  for(int i = 0; i <= 16; i++) //Kamu töltő képernyő :)
   {
     lcd.print("*");
     delay(100);
     lcd.setCursor(i, 1);
   }
-  delay(500);
+  delay(700);
   lcd.clear();
 } //end setup
 
 void loop() {
-  lcd.setCursor(0, 0);
-  lcd.write(0);
-  lcd.clear();
-  delay(1000);
-  gameover(g_score);
-  g_score++;
+  g_score = ingame(g_score, BUTTON_PIN);
+  g_score = gameover(g_score, BUTTON_PIN);
 } // end loop
