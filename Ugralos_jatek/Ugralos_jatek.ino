@@ -19,8 +19,8 @@ Ugrani egy gomb segítségével lehet.
 int g_score = 0;  
 int g_jumptic = 0;
 int g_playerstate = 0;
-int g_rock1pos = 15;
-int g_rock2pos = 15;
+int g_rock1pos = 16;
+int g_rock2pos = 16;
 bool g_rock1spawn = true;
 bool g_rock2spawn = true;
 bool g_rock1move = false;
@@ -50,7 +50,7 @@ LiquidCrystal_I2C lcd(0x27, LCD_COLUMNS, LCD_ROWS);
 ///////////////////////////////////////////////////
 
 const int BUTTON_PIN = 13; //nyomógomb
-const int ANALOG_PIN = 25;
+const int ANALOG_PIN = 34;
 
 void setup() {
   pinMode(BUTTON_PIN, INPUT_PULLUP);

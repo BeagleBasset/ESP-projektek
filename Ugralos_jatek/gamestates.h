@@ -6,56 +6,51 @@ int ingame(int score, int pin) //Játék menet
   lcd.setCursor(10, 0);
   lcd.print(score);
   int playerPos = 1;
-
-  
-
+  g_rock1pos = 16;
+  g_rock2pos = 16;
+  g_rock1spawn = true;
+  g_rock2spawn = true;
+  g_rock1move = false;
+  g_rock1move = false;
+  int rock1chance = random(1, 4);
+  Serial.println("rock1chance:");
+  Serial.println(rock1chance);
+  int rock2chance = random(5, 11);
+  Serial.println("rock2chance:");
+  Serial.println(rock2chance);
   while(1){
     if(playerPos == 1 && (g_rock1pos == 0 || g_rock2pos == 0 )){
-      Serial.println("Collosion!");
       break;
     }
     else {
       score++;
       if(g_rock1pos == 0) {
-        Serial.println("Rock1 end");
         g_rock1move = false;
         g_rock1spawn =  true;
-        g_rock1pos = 15;
+        g_rock1pos = 16;
       }
       if(g_rock2pos == 0){
-        Serial.println("Rock2 end");
         g_rock2move = false;
         g_rock2spawn = true;
-        g_rock2pos = 15;
+        g_rock2pos = 16;
       }
-      g_rock1spawn = rockSpawn(g_rock1spawn, &g_rock1move);
-      if(g_rock1spawn == false && g_rock2spawn == true){
-        Serial.println("Rock2 spawning...");
-        g_rock2spawn = rockSpawn(g_rock2spawn, &g_rock2move);
+      g_rock1spawn = rockSpawn(g_rock1spawn, &g_rock1move, rock1chance);
+      if(g_rock1spawn == false && g_rock2spawn == true && g_rock1pos < 16 && ((millis() % 3) == 0)){
+        g_rock2spawn = rockSpawn(g_rock2spawn, &g_rock2move, rock2chance);
       }
-    
-      g_rock2pos = rockMove(g_rock2pos, g_rock2move, &g_rock2spawn);
-      g_rock1pos = rockMove(g_rock2pos, g_rock1move, &g_rock1spawn);
+      if(g_rock1spawn == false && g_rock1move == true && g_rock1pos != 0){
+        g_rock1pos--;
+      }
+      if(g_rock2spawn == false && g_rock2move == true && g_rock2pos != 0){
+        g_rock2pos--;
+      }
       playerPos = playerJump(playerPos, pin);
-      Serial.println("Rock1 Pos:");
-      Serial.println(g_rock1pos);
-      Serial.println("Rock2 Pos:");
-      Serial.println(g_rock2pos);
-      Serial.println("Rock1 move:");
-      Serial.println(g_rock1move);
-      Serial.println("Rock2 move:");
-      Serial.println(g_rock2move);
-      Serial.println("Rock1 spawn value:");
-      Serial.println(g_rock1spawn);
-      Serial.println("Rock2 spawn value:");
-      Serial.println(g_rock2spawn);
-      Draw(playerPos, g_rock1pos, g_rock2pos, g_rock1move, g_rock2move, score);
 
+      Draw(playerPos, g_rock1pos, g_rock2pos, g_rock1move, g_rock2move, score);
       delay(100);
     }
   }
   return score;
-
 }
 
 int gameover(int score, int pin) //Gameover képernyő

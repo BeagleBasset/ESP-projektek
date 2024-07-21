@@ -39,34 +39,24 @@ int playerJump(int playerPos, int pin) {
   }
 }
 
-bool rockSpawn(bool rockspawn, bool* rockMove){
-  long randNumber = random(0, 11);
-  Serial.println("RandomNumber:");
-  Serial.println(randNumber);
-  if((randNumber > 3) && (rockspawn == true)){
+bool rockSpawn(bool rockspawn, bool* rockMove, int chance){
+  if(rockspawn){
+  unsigned long check = millis() + random(1, 1000);
+  Serial.println("check:");
+  Serial.println(check);
+  int modulo = check % chance;
+  Serial.println(modulo);  
+  if((modulo == 0) && (rockspawn == true)){
     *rockMove = true;
     rockspawn = false;
-    Serial.println("Rock spawned");
     return rockspawn;
+    }
   }
   else{
     return rockspawn;
   }
 }
 
-int rockMove(int rockPosition, bool rockMove, bool* rockspawn){
-    if(rockMove == true && *rockspawn == false){
-      if(rockPosition == 0){
-        return rockPosition;
-      }
-      else{
-        rockPosition--;
-        Serial.println("Rock moving...");
-        return rockPosition;
-    }
-    return rockPosition;
-  }
-}
 
 void Draw(int playerPos, int rock1Pos, int rock2Pos, bool rock1Move, bool rock2Move, int score) {
 
@@ -93,12 +83,10 @@ void Draw(int playerPos, int rock1Pos, int rock2Pos, bool rock1Move, bool rock2M
   }
 
   if(rock1Move == true){
-    Serial.println("Rock1 drawing...");
     lcd.setCursor(rock1Pos, 1);
     lcd.print("o");
   }
   if(rock2Move == true){
-    Serial.println("Rock2 drawing...");
     lcd.setCursor(rock2Pos, 1);
     lcd.print("o");    
   }
