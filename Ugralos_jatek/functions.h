@@ -39,18 +39,22 @@ int playerJump(int playerPos, int pin) {
   }
 }
 
-void rockSpawn(bool rockspawn, bool* rockMove){
+bool rockSpawn(bool rockspawn, bool* rockMove){
   long randNumber = random(0, 11);
   Serial.println("RandomNumber:");
   Serial.println(randNumber);
   if((randNumber > 3) && (rockspawn == true)){
     *rockMove = true;
+    rockspawn = false;
     Serial.println("Rock spawned");
+    return rockspawn;
+  }
+  else{
+    return rockspawn;
   }
 }
 
 int rockMove(int rockPosition, bool rockMove, bool* rockspawn){
-    *rockspawn = false;
     if(rockMove == true && *rockspawn == false){
       if(rockPosition == 0){
         return rockPosition;

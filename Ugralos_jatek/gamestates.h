@@ -28,10 +28,10 @@ int ingame(int score, int pin) //Játék menet
         g_rock2spawn = true;
         g_rock2pos = 15;
       }
-      rockSpawn(g_rock1spawn, &g_rock1move);
+      g_rock1spawn = rockSpawn(g_rock1spawn, &g_rock1move);
       if(g_rock1spawn == false && g_rock2spawn == true){
         Serial.println("Rock2 spawning...");
-        rockSpawn(g_rock2spawn, &g_rock2move);
+        g_rock2spawn = rockSpawn(g_rock2spawn, &g_rock2move);
       }
     
       g_rock2pos = rockMove(g_rock2pos, g_rock2move, &g_rock2spawn);
