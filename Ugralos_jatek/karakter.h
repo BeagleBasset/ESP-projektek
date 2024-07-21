@@ -5,6 +5,8 @@
 /*
 
 A játékos az alábbi bitmap alapján lesz ábrázolva.
+Két féle stádiumban történt az ábrázolása, ezáltal elérhető egy kvázi futás animáció,
+illetve felhasználható az ugráshoz is.
 
 */
 
